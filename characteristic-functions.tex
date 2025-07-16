@@ -1,0 +1,151 @@
+% Document setup
+\documentclass[article, a4paper, 11pt, oneside]{memoir}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[UKenglish]{babel}
+
+% Document info
+\newcommand\doctitle{Characteristic functions}
+\newcommand\docauthor{Danny Nygård Hansen}
+
+% Formatting and layout
+\usepackage[autostyle]{csquotes}
+\renewcommand{\mktextelp}{(\textellipsis\unkern)}
+\usepackage[final]{microtype}
+\usepackage{xcolor}
+\frenchspacing
+\usepackage{latex-sty/articlepagestyle}
+\usepackage{latex-sty/articlesectionstyle}
+
+% Fonts
+\usepackage[largesmallcaps,partialup]{kpfonts}
+\DeclareSymbolFontAlphabet{\mathrm}{operators} % https://tex.stackexchange.com/questions/40874/kpfonts-siunitx-and-math-alphabets
+\linespread{1.06}
+\let\mathfrak\undefined
+\usepackage{eufrak}
+\usepackage{inconsolata}
+\usepackage{amssymb}
+
+% Hyperlinks
+\usepackage{hyperref}
+\definecolor{linkcolor}{HTML}{4f4fa3}
+\hypersetup{%
+	pdftitle=\doctitle,
+	pdfauthor=\docauthor,
+	colorlinks,
+	linkcolor=linkcolor,
+	citecolor=linkcolor,
+	urlcolor=linkcolor,
+	bookmarksnumbered=true
+}
+
+% Equation numbering
+\numberwithin{equation}{chapter}
+
+% Footnotes
+\footmarkstyle{\textsuperscript{#1}\hspace{0.25em}}
+
+% Mathematics
+\usepackage{latex-sty/basicmathcommands}
+\usepackage{latex-sty/framedtheorems}
+\usepackage{latex-sty/probabilitycommands}
+\usepackage{tikz-cd}
+\usetikzlibrary{babel}
+
+% Lists
+\usepackage{enumitem}
+\setenumerate[0]{label=\normalfont(\arabic*)}
+
+% Bibliography
+\usepackage[backend=biber, style=authoryear, maxcitenames=2, useprefix]{biblatex}
+\addbibresource{references.bib}
+
+% Title
+\title{\doctitle}
+\author{\docauthor}
+
+
+% Section style -- add to section style .sty?
+\setsubsecheadstyle{\normalfont\itshape}
+
+
+% Preimage -- to be added to mathcommands .sty
+\newcommand{\preim}{^{-1}}
+
+
+\newcommand{\calN}{\mathcal{N}}
+\DeclarePairedDelimiter{\nhoodfilteraux}{(}{)}
+% \newcommand{\nhoodfilter}[1]{\calN\nhoodfilteraux{#1}}
+\newcommand{\nhoodfilter}[1]{\calN_{#1}}
+
+
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calW}{\mathcal{W}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calJ}{\mathcal{J}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calL}{\mathcal{L}}
+
+\newcommand{\borel}[1]{\calB(#1)}
+\DeclareMathOperator{\supp}{supp}
+
+% Probability
+\let\oldP\P
+\renewcommand{\P}{\mathbb{P}}
+
+\renewcommand{\mean}[2][]{\mathbb{E}\meanaux[#1]{#2}}
+
+\DeclarePairedDelimiterX{\condexpaux}[2]{[}{]}{#1\;\delimsize\vert\;#2}
+\newcommand{\condexp}[3][]{{\mathbb{E}\condexpaux[#1]{#2}{#3}}}
+% \newcommand{\condexp}[2]{\mathbb{E}[#1 \mid #2]}
+
+% Use DeclarePairedDelimiter to get delimiter sizes
+% \newcommand{\condP}[2]{\P(#1 \mid #2)}
+\DeclarePairedDelimiterX{\condPaux}[2]{(}{)}{#1\;\delimsize\vert\;#2}
+\newcommand{\condP}[3][]{{\P\condPaux[#1]{#2}{#3}}}
+
+% Add to basicmathcommands.sty
+\DeclarePairedDelimiter{\card}{\lvert}{\rvert}
+\renewcommand{\symdiff}{\mathbin{\triangle}}
+
+
+\begin{document}
+
+\maketitle
+
+\chapter{Convolutions}
+
+\newcommand{\tensor}{\otimes}
+
+Define a function $s_n \colon \reals^{nd} \to \reals^d$ by
+%
+\begin{equation*}
+    s_n(x_1, \ldots, x_n)
+        = x_1 + \cdots + x_n.
+\end{equation*}
+%
+This is Borel-measurable, so the following definition makes sense:
+
+\begin{definition}[Convolution of measures]
+    Let $\mu_1, \ldots, \mu_n$ be finite measures on $(\reals^d, \borel{\reals^d})$. The image measure
+    %
+    \begin{equation*}
+        \mu_1 * \cdots * \mu_n
+            = (\mu_1 \tensor \cdots \tensor \mu_n) \circ s_n\inv
+    \end{equation*}
+    %
+    on $\borel{\reals^d}$ is called the \emph{convolution} of the measures $\mu_1, \ldots, \mu_n$.
+\end{definition}
+%
+It is easy to show that the convolution product is associative, so it is enough to study the convolution of two measures.
+
+\end{document}
